@@ -3,7 +3,9 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   signOut, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
@@ -104,6 +106,47 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await signInWithPopup(auth, provider);
+      const firebaseUser = userCredential.user;
+      
+      const docRef = doc(db, 'users', firebaseUser.uid);
+      const docSnap = await getDoc(docRef);
+      
+      let userData = {
+        id: firebaseUser.uid,
+        email: firebaseUser.email,
+        name: firebaseUser.displayName || 'User',
+        role: 'patient'
+      };
+
+      if (!docSnap.exists()) {
+        const newUser = {
+          name: userData.name,
+          email: userData.email,
+          phone: firebaseUser.phoneNumber || '',
+          role: 'patient',
+          joinedDate: new Date().toISOString().split('T')[0],
+        };
+        await setDoc(docRef, newUser);
+      } else {
+        userData = { id: firebaseUser.uid, ...docSnap.data() };
+      }
+      
+      setUser(userData);
+      return { success: true, user: userData };
+    } catch (error) {
+      console.error('Google Sign-In Error', error);
+      let message = error.message;
+      if (error.code === 'auth/popup-closed-by-user') {
+        message = 'Google sign-in was cancelled.';
+      }
+      return { success: false, message };
+    }
+  };
+
   const logout = async () => {
     try {
       await signOut(auth);
@@ -127,7 +170,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateProfile }}>
+    <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, register, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );
