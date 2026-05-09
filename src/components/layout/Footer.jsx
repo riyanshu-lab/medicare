@@ -74,29 +74,22 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Newsletter */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Contact Us</h4>
-            <ul className="footer-contact-list">
-              <li>
-                <MapPin size={16} className="footer-contact-icon" />
-                <span>Kolkata, West Bengal, India</span>
-              </li>
-              <li>
-                <Phone size={16} className="footer-contact-icon" />
-                <a href="tel:+916201489802">+91 6201489802</a>
-              </li>
-              <li>
-                <Mail size={16} className="footer-contact-icon" />
-                <a href="mailto:riyanshuakash@gmail.com">riyanshuakash@gmail.com</a>
-              </li>
-            </ul>
-            <div className="footer-emergency">
-              <Phone size={14} />
-              <div>
-                <div className="footer-emergency-label">Emergency Helpline</div>
-                <a href="tel:+916201489802" className="footer-emergency-number">+91 6201489802</a>
-              </div>
+            <h4 className="footer-col-title">Newsletter</h4>
+            <p className="footer-tagline" style={{ fontSize: 14 }}>
+              Subscribe to get the latest health tips and hospital updates.
+            </p>
+            <div className="footer-newsletter">
+              <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
+                <input type="email" className="input" placeholder="Email address" style={{ padding: '10px 14px', fontSize: 13 }} />
+                <button type="submit" className="btn btn-p btn-sm">Join</button>
+              </form>
+            </div>
+            
+            <div className="footer-emergency" style={{ marginTop: 'var(--s-8)', background: 'var(--primary-soft)', padding: 'var(--s-4)', borderRadius: 'var(--r-md)' }}>
+              <div className="footer-emergency-label" style={{ fontWeight: 800, color: 'var(--primary)', fontSize: 12, textTransform: 'uppercase' }}>Emergency 24/7</div>
+              <a href="tel:+916201489802" className="footer-emergency-number" style={{ fontSize: 18, fontWeight: 800, color: 'var(--text-main)' }}>+91 6201489802</a>
             </div>
           </div>
         </div>

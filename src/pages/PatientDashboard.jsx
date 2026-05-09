@@ -93,34 +93,60 @@ const Overview = () => {
         ))}
       </div>
 
-      <div className="card">
-        <div className="dash-section-header" style={{ marginBottom: 'var(--s-6)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h4>Upcoming Appointments</h4>
-          <NavLink to="/dashboard/appointments" className="btn btn-s btn-sm">See all</NavLink>
-        </div>
-        {upcoming.length === 0 ? (
-          <div className="empty-state">
-            <Calendar size={48} strokeWidth={1} style={{ marginBottom: 'var(--s-4)', opacity: 0.5 }} />
-            <h3>No upcoming appointments</h3>
-            <p>Schedule your next visit with our specialists.</p>
+      <div className="dash-overview-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: 'var(--s-6)', marginTop: 'var(--s-6)' }}>
+        <div className="card">
+          <div className="dash-section-header" style={{ marginBottom: 'var(--s-6)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h4>Upcoming Appointments</h4>
+            <NavLink to="/dashboard/appointments" className="btn btn-s btn-sm">See all</NavLink>
           </div>
-        ) : (
-          <div className="apt-list">
-            {upcoming.slice(0, 3).map(a => (
-              <div key={a.id} className="apt-item" style={{ display: 'flex', gap: 'var(--s-4)', padding: 'var(--s-4) 0', borderTop: '1px solid var(--border)' }}>
-                <div style={{ padding: '8px 12px', background: 'var(--bg-muted)', borderRadius: 'var(--r-md)', textAlign: 'center', minWidth: 60 }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase' }}>{a.date.split('-')[1] && ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(a.date.split('-')[1])-1]}</div>
-                  <div style={{ fontSize: 20, fontWeight: 800 }}>{Number(a.date.split('-')[2])}</div>
+          {upcoming.length === 0 ? (
+            <div className="empty-state">
+              <Calendar size={48} strokeWidth={1} style={{ marginBottom: 'var(--s-4)', opacity: 0.5 }} />
+              <h3>No upcoming appointments</h3>
+              <p>Schedule your next visit with our specialists.</p>
+            </div>
+          ) : (
+            <div className="apt-list">
+              {upcoming.slice(0, 3).map(a => (
+                <div key={a.id} className="apt-item" style={{ display: 'flex', gap: 'var(--s-4)', padding: 'var(--s-4) 0', borderTop: '1px solid var(--border)' }}>
+                  <div style={{ padding: '8px 12px', background: 'var(--bg-muted)', borderRadius: 'var(--r-md)', textAlign: 'center', minWidth: 60 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase' }}>{a.date.split('-')[1] && ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(a.date.split('-')[1])-1]}</div>
+                    <div style={{ fontSize: 20, fontWeight: 800 }}>{Number(a.date.split('-')[2])}</div>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 700, fontSize: 16 }}>{a.doctorName}</div>
+                    <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>{a.department} · {a.time}</div>
+                  </div>
+                  <StatusBadge status={a.status} />
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>{a.doctorName}</div>
-                  <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>{a.department} · {a.time}</div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="card">
+          <div className="dash-section-header" style={{ marginBottom: 'var(--s-6)' }}>
+            <h4>Health Snapshot</h4>
+          </div>
+          <div className="health-metrics" style={{ display: 'grid', gap: 'var(--s-4)' }}>
+            {[
+              { label: 'Heart Rate', value: '72', unit: 'bpm', status: 'Normal', color: 'hsl(142, 71%, 45%)' },
+              { label: 'Blood Pressure', value: '120/80', unit: 'mmHg', status: 'Optimal', color: 'hsl(142, 71%, 45%)' },
+              { label: 'Body Temp', value: '98.6', unit: '°F', status: 'Normal', color: 'hsl(142, 71%, 45%)' },
+            ].map(m => (
+              <div key={m.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--s-3) var(--s-4)', background: 'var(--bg-muted)', borderRadius: 'var(--r-md)' }}>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{m.label}</div>
+                  <div style={{ fontSize: 18, fontWeight: 800 }}>{m.value} <span style={{ fontSize: 12, fontWeight: 600, opacity: 0.5 }}>{m.unit}</span></div>
                 </div>
-                <StatusBadge status={a.status} />
+                <span className="badge" style={{ background: `${m.color}15`, color: m.color }}>{m.status}</span>
               </div>
             ))}
           </div>
-        )}
+          <div style={{ marginTop: 'var(--s-6)', padding: 'var(--s-4)', background: 'var(--primary-soft)', borderRadius: 'var(--r-md)', fontSize: 13, color: 'var(--primary)', fontWeight: 600 }}>
+             Next check-up recommended in 2 weeks.
+          </div>
+        </div>
       </div>
     </div>
   );

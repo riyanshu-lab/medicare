@@ -108,8 +108,25 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* ── Stats ─────────────────────────────────────────────────────────── */}
+      {/* ── Trusted By ────────────────────────────────────────────────────── */}
+      <section className="trusted-section">
+        <div className="container">
+          <div className="trusted-inner">
+            <span className="trusted-text">Recognized By</span>
+            <div className="marquee">
+              <div className="marquee-content">
+                {['WHO', 'Medical Council', 'Health Ministry', 'Red Cross', 'UNICEF', 'ISO Certified'].map(b => (
+                  <span key={b} className="trusted-brand">{b}</span>
+                ))}
+                {/* Duplicate for infinite loop */}
+                {['WHO', 'Medical Council', 'Health Ministry', 'Red Cross', 'UNICEF', 'ISO Certified'].map(b => (
+                  <span key={b + '_2'} className="trusted-brand">{b}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="container">
         <div className="stats-grid">
           <div className="premium-stat fade-up" style={{ animationDelay: '0.3s' }}>

@@ -3,76 +3,106 @@
   min-height: 100vh;
 }
 
+.page-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+  color: white;
+  padding: var(--s-20) 0;
+  text-align: center;
+}
+
+.page-header h1 { color: white; font-size: 3rem; margin-bottom: var(--s-4); }
+.page-header p { color: hsla(0, 0%, 100%, 0.8); max-width: 600px; margin: 0 auto; }
+
 .contact-layout {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: var(--s-10);
-  align-items: start;
+  gap: var(--s-12);
+  padding: var(--s-16) 0;
 }
 
 .contact-form-card {
   padding: var(--s-10);
 }
 
+.contact-form-title {
+  font-size: 24px;
+  margin-bottom: var(--s-8);
+}
+
 .contact-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--s-4);
+  gap: var(--s-6);
 }
 
 .contact-info-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-4);
+  display: grid;
+  gap: var(--s-6);
 }
 
 .contact-info-item {
   display: flex;
+  gap: var(--s-5);
   align-items: center;
-  gap: var(--s-4);
-  padding: var(--s-5);
 }
 
 .cii-icon {
-  width: 40px; height: 40px;
+  width: 52px; height: 52px;
   background: var(--primary-soft);
   color: var(--primary);
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
   display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
 
 .cii-label {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
-  text-transform: uppercase;
   color: var(--text-muted);
-  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
 }
 
 .cii-value {
   font-weight: 700;
-  color: var(--text-main);
-  text-decoration: none;
+  font-size: 16px;
 }
 
 .emergency-card {
-  background: hsl(0, 84%, 60%);
+  background: linear-gradient(135deg, hsl(0, 84%, 60%) 0%, hsl(0, 84%, 40%) 100%);
   color: white;
-  padding: var(--s-6);
-  margin-top: var(--s-6);
+  padding: var(--s-8);
+  display: flex;
+  gap: var(--s-5);
+  margin-top: var(--s-8);
 }
 
-.emergency-card-number {
-  font-size: 24px;
-  font-weight: 800;
-  color: white;
-  text-decoration: none;
-}
+.emergency-card-icon { font-size: 32px; }
+.emergency-card-label { font-weight: 800; opacity: 0.8; font-size: 13px; text-transform: uppercase; }
+.emergency-card-number { font-size: 24px; font-weight: 800; color: white; display: block; margin: 4px 0; }
+.emergency-card-note { font-size: 12px; opacity: 0.7; }
 
 .map-placeholder {
   height: 240px;
   background: var(--bg-muted);
-  margin-top: var(--s-6);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--s-8);
+  position: relative;
+  overflow: hidden;
+}
+
+.map-inner {
   text-align: center;
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .contact-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .contact-form-row { grid-template-columns: 1fr; }
 }
