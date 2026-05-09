@@ -1,0 +1,364 @@
+/* ─── Booking Page ───────────────────────────────────────────────────────────── */
+.booking-inner {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-16);
+}
+
+/* Step Indicator */
+.steps-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: var(--space-10);
+  overflow-x: auto;
+  padding: var(--space-2);
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 80px;
+}
+.step-circle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-gray-100);
+  color: var(--color-gray-400);
+  border: 2px solid var(--color-gray-200);
+  font-weight: 700;
+  transition: all var(--transition-base);
+}
+.step-item.current .step-circle {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+}
+.step-item.done .step-circle {
+  background: var(--color-success);
+  color: white;
+  border-color: var(--color-success);
+}
+.step-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-gray-400);
+  white-space: nowrap;
+  text-align: center;
+}
+.step-item.current .step-label { color: var(--color-primary); }
+.step-item.done    .step-label { color: var(--color-success); }
+
+.step-line {
+  height: 2px;
+  flex: 1;
+  min-width: 40px;
+  background: var(--color-gray-200);
+  transition: background var(--transition-base);
+  margin-bottom: 24px; /* aligns with circles */
+}
+.step-line.done { background: var(--color-success); }
+
+/* Booking body */
+.booking-body {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.booking-step { animation: pageFadeIn 0.3s ease; }
+.step-heading { margin-bottom: var(--space-2); }
+.step-sub     { color: var(--color-gray-500); margin-bottom: var(--space-6); }
+
+/* Step 1: Department Selection */
+.dept-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+.dept-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-xl);
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+.dept-option:hover { border-color: var(--color-primary-200); background: var(--color-primary-50); }
+.dept-option.selected { border-color: var(--color-primary); background: var(--color-primary-50); }
+.dept-option-icon { font-size: 2rem; }
+.dept-option-name { font-size: 1rem; font-weight: 700; color: var(--color-gray-900); }
+.dept-option-desc { font-size: 0.8125rem; color: var(--color-gray-500); line-height: 1.4; }
+.dept-option-check {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 22px; height: 22px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+}
+.dept-option:not(.selected) .dept-option-check { display: none; }
+
+/* Step 2: Doctor Selection */
+.doctor-select-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.doctor-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-base);
+}
+.doctor-option:hover   { border-color: var(--color-primary-200); background: var(--color-primary-50); }
+.doctor-option.selected { border-color: var(--color-primary); background: var(--color-primary-50); }
+.do-left { display: flex; align-items: center; gap: var(--space-4); flex: 1; }
+.do-name  { font-weight: 700; color: var(--color-gray-900); font-size: 1rem; }
+.do-spec  { font-size: 0.875rem; color: var(--color-gray-500); }
+.do-avail { font-size: 0.8125rem; color: var(--color-primary); font-weight: 600; margin-top: 2px; }
+.do-right { text-align: right; }
+.do-fee   { font-size: 1.25rem; font-weight: 800; color: var(--color-primary); }
+.do-fee-label { font-size: 0.75rem; color: var(--color-gray-400); }
+.option-selected-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 22px; height: 22px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+}
+
+/* Step 3: Date & Time */
+.booking-step-dt {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* Calendar */
+.calendar {
+  padding: var(--space-5);
+  user-select: none;
+}
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+.cal-nav {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  color: var(--color-gray-600);
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition-fast);
+}
+.cal-nav:hover { background: var(--color-gray-100); }
+.cal-title { font-weight: 700; color: var(--color-gray-900); font-size: 1rem; }
+
+.cal-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--space-2);
+}
+.cal-day-name {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-gray-400);
+  text-transform: uppercase;
+  padding: var(--space-2) 0;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 2px solid transparent;
+}
+.cal-day:hover:not(.disabled) { background: var(--color-primary-100); color: var(--color-primary); }
+.cal-day.today { border-color: var(--color-primary-200); color: var(--color-primary); font-weight: 700; }
+.cal-day.selected { background: var(--color-primary); color: white; border-color: transparent; }
+.cal-day.disabled { color: var(--color-gray-300); cursor: not-allowed; background: none; }
+.cal-day.selected:hover { background: var(--color-primary-dark); }
+
+/* Time Slots */
+.slots-section { }
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+.slot-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+.slot-btn:hover:not(.booked) { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-50); }
+.slot-btn.selected { border-color: var(--color-primary); background: var(--color-primary); color: white; }
+.slot-btn.booked { background: var(--color-gray-50); color: var(--color-gray-300); cursor: not-allowed; }
+.slot-booked-label { font-size: 0.6875rem; color: var(--color-gray-400); }
+
+.slots-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-xl);
+  border: 2px dashed var(--color-gray-200);
+  color: var(--color-gray-400);
+  text-align: center;
+  gap: var(--space-3);
+}
+.placeholder-icon { color: var(--color-gray-300); }
+
+/* Step 4: Confirm */
+.confirm-card { padding: var(--space-8); }
+.confirm-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+.confirm-details { display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6); }
+.confirm-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.confirm-row-icon { color: var(--color-primary); width: 20px; flex-shrink: 0; }
+.confirm-row-label { font-size: 0.875rem; color: var(--color-gray-500); width: 120px; flex-shrink: 0; }
+.confirm-row-value { font-weight: 600; color: var(--color-gray-900); }
+
+/* Navigation */
+.booking-nav {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-gray-100);
+  gap: var(--space-4);
+}
+
+/* Success */
+.booking-success-wrap {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-12) 0;
+}
+.booking-success {
+  max-width: 520px;
+  width: 100%;
+  padding: var(--space-12) var(--space-10);
+  text-align: center;
+}
+.success-icon-wrap { display: flex; justify-content: center; margin-bottom: var(--space-4); }
+.success-icon {
+  width: 72px; height: 72px;
+  background: var(--color-success);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  box-shadow: 0 0 0 12px rgba(16,185,129,0.1);
+  animation: successPop 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes successPop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.success-confetti { font-size: 2.5rem; margin-bottom: var(--space-3); }
+.booking-success h2 { margin-bottom: var(--space-2); }
+.success-subtitle { font-size: 1rem; color: var(--color-gray-500); margin-bottom: var(--space-6); }
+
+.success-id-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+}
+.success-id-label { font-size: 0.875rem; font-weight: 600; color: var(--color-gray-500); }
+.success-id { font-size: 1rem; font-weight: 800; color: var(--color-primary); font-family: monospace; letter-spacing: 0.05em; }
+
+.success-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  text-align: left;
+}
+.success-detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  color: var(--color-primary);
+}
+.sd-label { font-size: 0.8125rem; color: var(--color-gray-400); }
+.sd-value  { font-weight: 700; color: var(--color-gray-900); }
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .booking-step-dt { grid-template-columns: 1fr; }
+  .dept-select-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-indicator { justify-content: flex-start; }
+}
+@media (max-width: 480px) {
+  .dept-select-grid { grid-template-columns: 1fr; }
+  .slots-grid { grid-template-columns: repeat(2, 1fr); }
+  .doctor-option { flex-wrap: wrap; }
+}

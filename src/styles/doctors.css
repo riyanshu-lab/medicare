@@ -1,0 +1,181 @@
+/* ─── Doctors Page ───────────────────────────────────────────────────────────── */
+.page-header {
+  background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-white) 100%);
+  padding: var(--space-12) 0;
+  border-bottom: 1px solid var(--color-gray-100);
+}
+.page-header .eyebrow { display: block; margin-bottom: var(--space-2); }
+.page-header h1 { margin-bottom: var(--space-3); }
+.page-header p  { font-size: 1.0625rem; max-width: 540px; }
+
+.doctors-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-8);
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-12);
+  align-items: start;
+}
+
+/* Sidebar Filters */
+.doctors-sidebar { position: sticky; top: calc(var(--nav-height) + var(--space-4)); }
+.filter-card { padding: var(--space-5); }
+.filter-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-4);
+}
+
+.filter-dept-list { display: flex; flex-direction: column; gap: var(--space-1); }
+.filter-dept-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-gray-700);
+  text-align: left;
+  transition: all var(--transition-fast);
+  width: 100%;
+}
+.filter-dept-btn:hover { background: var(--color-gray-50); color: var(--color-primary); }
+.filter-dept-btn.active { background: var(--color-primary-100); color: var(--color-primary); font-weight: 700; }
+.filter-dept-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+}
+.filter-dept-btn.active .filter-dept-count {
+  background: var(--color-primary-200);
+  color: var(--color-primary-dark);
+}
+
+/* Toolbar */
+.doctors-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+.doctors-search { flex: 1; min-width: 200px; position: relative; }
+.search-clear {
+  position: absolute;
+  right: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-400);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+}
+.search-clear:hover { color: var(--color-gray-700); }
+
+.results-count {
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.active-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-primary-50);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  margin-bottom: var(--space-4);
+}
+.active-filter-clear {
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 50%;
+  color: var(--color-primary);
+  transition: background var(--transition-fast);
+}
+.active-filter-clear:hover { background: var(--color-primary-100); }
+
+/* Doctors grid */
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
+}
+
+/* Doctor Card */
+.doctor-card { overflow: hidden; }
+.dc-header {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--color-gray-50);
+}
+.dc-avatar { flex-shrink: 0; }
+.dc-rating  { display: flex; flex-direction: column; gap: var(--space-1); align-items: flex-end; }
+.dc-reviews { font-size: 0.75rem; color: var(--color-gray-400); }
+
+.dc-body { padding: var(--space-4) var(--space-6); }
+.dc-name { font-size: 1rem; margin-bottom: var(--space-1); }
+.dc-spec  { font-size: 0.875rem; color: var(--color-gray-500); margin-bottom: var(--space-3); }
+.dc-dept  { margin-bottom: var(--space-4); }
+
+.dc-stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.dc-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+.dc-stat svg { color: var(--color-primary); }
+
+.dc-fee {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-gray-100);
+}
+.dc-fee-label { font-size: 0.8125rem; color: var(--color-gray-500); }
+.dc-fee-value { font-size: 1.125rem; font-weight: 800; color: var(--color-primary); }
+
+.dc-footer {
+  padding: var(--space-4) var(--space-6) var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .doctors-layout { grid-template-columns: 1fr; }
+  .doctors-sidebar { position: static; }
+  .filter-dept-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .filter-dept-btn { flex: none; }
+}
+@media (max-width: 600px) {
+  .doctors-grid { grid-template-columns: 1fr; }
+}

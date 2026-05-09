@@ -1,0 +1,137 @@
+/* Admin-specific extras */
+.admin-sidebar { background: #0F1629 !important; }
+.admin-dash .dash-nav-item.active { background: #7C3AED !important; }
+
+.admin-filter-tabs {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+.admin-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-600);
+  border: 1.5px solid var(--color-gray-200);
+  background: var(--color-white);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+.admin-tab:hover { border-color: var(--color-primary-200); color: var(--color-primary); }
+.admin-tab.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.admin-tab-count {
+  background: rgba(255,255,255,0.2);
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+}
+.admin-tab:not(.active) .admin-tab-count {
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+}
+
+.admin-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.admin-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.avail-days {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.day-btn {
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.day-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.day-btn.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+
+/* ─── Admin Chart ────────────────────────────────────────────────────────────── */
+.admin-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 200px;
+  padding-top: var(--space-6);
+  border-bottom: 1px solid var(--color-gray-100);
+}
+
+.chart-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  width: 40px;
+  position: relative;
+  gap: var(--space-2);
+}
+
+.chart-bar {
+  width: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  position: relative;
+  transition: opacity var(--transition-fast);
+  cursor: pointer;
+  min-height: 4px;
+}
+.chart-bar:hover {
+  opacity: 0.85;
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-gray-900);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+}
+.chart-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: var(--color-gray-900) transparent transparent transparent;
+}
+.chart-bar:hover .chart-tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: -36px;
+}
+
+.chart-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-gray-500);
+}
