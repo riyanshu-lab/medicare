@@ -114,7 +114,14 @@ const Auth = () => {
           Google
         </button>
 
-            {isLogin ? 'Sign up here' : 'Sign in here'}
+        <p style={{ textAlign: 'center', marginTop: 'var(--s-8)', fontSize: 14, color: 'var(--text-muted)' }}>
+          {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
+          <button 
+            type="button"
+            onClick={() => setIsLogin(!isLogin)}
+            style={{ color: 'var(--primary)', fontWeight: 700, cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}
+          >
+            {isLogin ? 'Sign Up' : 'Sign In'}
           </button>
         </p>
       </div>

@@ -49,6 +49,12 @@ const StatusBadge = ({ status }) => {
   const map = { confirmed:'badge-success', pending:'badge-warning', cancelled:'badge-danger', completed:'badge-gray' };
   return <span className={`badge ${map[status] || 'badge-gray'}`}>{status}</span>;
 };
+/* ─── Admin Overview ─────────────────────────────────────────────────────────── */
+const AdminOverview = () => {
+  const { appointments, doctors, departments } = useData();
+  const today   = new Date().toISOString().split('T')[0];
+  const todayApts = appointments.filter(a => a.date === today);
+  const pending   = appointments.filter(a => a.status === 'pending');
 
   return (
     <div className="dash-content fade-up">
