@@ -19,8 +19,8 @@ const Departments = () => (
             <div className="ddc-icon">{d.icon}</div>
             <h3>{d.name}</h3>
             <p>{d.description}</p>
-            <Link to={`/doctors?dept=${d.name}`} className="btn btn-outline btn-sm" style={{ alignSelf:'flex-start', marginTop:'auto' }}>
-              View Specialists →
+            <Link to={`/doctors?dept=${d.name}`} className="btn btn-s btn-sm" style={{ alignSelf:'flex-start', marginTop:'auto' }}>
+              View Specialists
             </Link>
           </div>
         ))}

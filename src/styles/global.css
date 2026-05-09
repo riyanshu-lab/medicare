@@ -211,3 +211,34 @@ h1, h2, h3, h4, h5, h6 {
 .dark .badge-success { background: hsla(142, 71%, 45%, 0.1); }
 .dark .badge-warning { background: hsla(38, 92%, 50%, 0.1); }
 .dark .badge-danger  { background: hsla(0, 84%, 60%, 0.1); }
+
+/* ─── Accessibility ──────────────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--primary);
+  color: white;
+  padding: 10px 20px;
+  z-index: 2000;
+  transition: top 0.3s ease;
+  font-weight: 700;
+  border-radius: 0 0 var(--r-md) 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── Layout Utilities ───────────────────────────────────────────────────────── */
+.section-sm { padding: var(--s-10) 0; }
+.section-md { padding: var(--s-20) 0; }
+.section-lg { padding: var(--s-24) 0; }
+
+.text-center { text-align: center; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: var(--s-2); }
+.gap-4 { gap: var(--s-4); }
+

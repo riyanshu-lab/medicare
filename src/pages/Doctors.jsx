@@ -42,8 +42,8 @@ const DoctorCard = ({ doctor, onBook }) => (
       </div>
     </div>
     <div className="dc-footer">
-      <button className="btn btn-primary" style={{ width:'100%' }} onClick={() => onBook(doctor)}>
-        Book Appointment <ChevronRight size={16} />
+      <button className="btn btn-p" style={{ width:'100%' }} onClick={() => onBook(doctor)}>
+        Book Appointment
       </button>
     </div>
   </article>
@@ -111,13 +111,12 @@ const Doctors = () => {
             </div>
           </div>
 
-          <div className="filter-card card" style={{ marginTop: 'var(--space-4)' }}>
+          <div className="filter-card card" style={{ marginTop: 'var(--s-4)' }}>
             <h4 className="filter-title">Sort By</h4>
             <select
-              className="form-input form-select"
+              className="input"
               value={sortBy}
               onChange={e => setSortBy(e.target.value)}
-              aria-label="Sort doctors by"
             >
               <option value="rating">Highest Rating</option>
               <option value="experience">Most Experience</option>
@@ -131,15 +130,14 @@ const Doctors = () => {
         <div className="doctors-main">
           {/* Search bar */}
           <div className="doctors-toolbar">
-            <div className="search-wrapper doctors-search">
-              <Search size={16} className="search-icon" />
+            <div className="search-wrapper">
+              <Search size={18} className="search-icon" />
               <input
                 type="search"
-                className="form-input"
-                placeholder="Search doctors by name or specialization…"
+                className="input"
+                placeholder="Search by name, specialty..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                aria-label="Search doctors"
               />
               {search && (
                 <button className="search-clear" onClick={() => setSearch('')} aria-label="Clear search">

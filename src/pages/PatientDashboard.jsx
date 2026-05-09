@@ -161,7 +161,7 @@ const Appointments = () => {
           <h2>My Appointments</h2>
           <p>Manage your upcoming scheduled visits.</p>
         </div>
-        <button className="btn btn-primary" onClick={() => navigate('/booking')}>+ New Appointment</button>
+        <button className="btn btn-p" onClick={() => navigate('/booking')}>+ New Appointment</button>
       </div>
 
       {upcoming.length === 0 ? (
@@ -169,7 +169,7 @@ const Appointments = () => {
           <div className="empty-state-icon">📅</div>
           <h3>No upcoming appointments</h3>
           <p>You have no active bookings at the moment.</p>
-          <button className="btn btn-primary" style={{ marginTop:'var(--space-4)' }} onClick={() => navigate('/booking')}>Book Appointment</button>
+          <button className="btn btn-p" style={{ marginTop:'var(--s-4)' }} onClick={() => navigate('/booking')}>Book Appointment</button>
         </div>
       ) : (
         <div className="apt-cards">
@@ -192,7 +192,7 @@ const Appointments = () => {
               </div>
               {a.reason && <p className="apt-reason">"{a.reason}"</p>}
               <div className="apt-card-actions">
-                <button className="btn btn-danger btn-sm" onClick={() => setCancelId(a.id)}>
+                <button className="btn btn-s btn-sm" style={{ color: 'var(--color-danger)' }} onClick={() => setCancelId(a.id)}>
                   <XCircle size={14} /> Cancel
                 </button>
               </div>
@@ -330,31 +330,31 @@ const Profile = () => {
           <form onSubmit={handleSave} className="profile-form">
             <div className="form-group">
               <label className="form-label" htmlFor="p-name">Full Name</label>
-              <input id="p-name" type="text" className="form-input" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+              <input id="p-name" type="text" className="input" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
             </div>
             <div className="profile-form-row">
               <div className="form-group">
                 <label className="form-label" htmlFor="p-phone">Phone</label>
-                <input id="p-phone" type="tel" className="form-input" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
+                <input id="p-phone" type="tel" className="input" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="p-dob">Date of Birth</label>
-                <input id="p-dob" type="date" className="form-input" value={form.dob} onChange={e => setForm(f => ({ ...f, dob: e.target.value }))} />
+                <input id="p-dob" type="date" className="input" value={form.dob} onChange={e => setForm(f => ({ ...f, dob: e.target.value }))} />
               </div>
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="p-blood">Blood Group</label>
-              <select id="p-blood" className="form-input form-select" value={form.bloodGroup} onChange={e => setForm(f => ({ ...f, bloodGroup: e.target.value }))}>
+              <select id="p-blood" className="input" value={form.bloodGroup} onChange={e => setForm(f => ({ ...f, bloodGroup: e.target.value }))}>
                 <option value="">Select blood group</option>
                 {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(g => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="p-addr">Address</label>
-              <textarea id="p-addr" className="form-input" rows={2} value={form.address} onChange={e => setForm(f => ({ ...f, address: e.target.value }))} style={{ resize:'vertical' }} />
+              <textarea id="p-addr" className="input" rows={2} value={form.address} onChange={e => setForm(f => ({ ...f, address: e.target.value }))} style={{ resize:'vertical' }} />
             </div>
-            <button type="submit" className="btn btn-primary" disabled={saving}>
-              {saving ? <><span className="spinner" /> Saving…</> : <><Save size={16} /> Save Changes</>}
+            <button type="submit" className="btn btn-p" disabled={saving}>
+              {saving ? 'Saving...' : 'Save Changes'}
             </button>
           </form>
         </div>

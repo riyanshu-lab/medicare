@@ -69,6 +69,46 @@
   transform: perspective(1000px) rotateY(0) rotateX(0);
 }
 
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-6);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.hero-card-doctor {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+
+.hc-name { font-weight: 800; font-size: 16px; }
+.hc-spec { font-size: 13px; color: var(--text-muted); }
+
+.hc-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 80px;
+  background: var(--bg-muted);
+  border-radius: var(--r-md);
+  padding: 12px;
+}
+
+.hc-bar {
+  flex: 1;
+  background: var(--primary);
+  border-radius: 2px;
+  opacity: 0.3;
+  transition: var(--transition);
+}
+
+.hc-bar:nth-child(even) { opacity: 0.6; }
+.hc-bar:hover { opacity: 1; }
+
 /* ─── Stats Section (Premium Cards) ────────────────────────────────────────── */
 .stats-grid {
   display: grid;

@@ -1,14 +1,34 @@
+.departments-page {
+  background: var(--bg-app);
+  min-height: 100vh;
+}
+
 .depts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s-8);
 }
+
 .dept-detail-card {
-  padding: var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  padding: var(--s-10);
+  transition: var(--transition);
 }
-.ddc-icon { font-size: 2.5rem; }
-.dept-detail-card h3 { margin: 0; }
-.dept-detail-card p  { flex: 1; }
+
+.ddc-icon {
+  font-size: 3rem;
+  margin-bottom: var(--s-6);
+}
+
+.dept-detail-card h3 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: var(--s-3);
+}
+
+.dept-detail-card p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--s-8);
+}

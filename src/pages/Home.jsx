@@ -99,8 +99,10 @@ const Home = () => {
                   <div className="hc-spec">Cardiology · Available Now</div>
                 </div>
               </div>
-              <div style={{ height: 100, background: 'var(--bg-muted)', borderRadius: 'var(--r-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: 12 }}>
-                Patient Load Visualization
+              <div className="hc-chart">
+                {[30, 50, 70, 45, 90, 65, 80].map((h, i) => (
+                  <div key={i} className="hc-bar" style={{ height: `${h}%` }} />
+                ))}
               </div>
             </div>
           </div>

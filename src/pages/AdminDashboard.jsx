@@ -189,7 +189,7 @@ const AdminAppointments = () => {
                   <td>
                     <div className="admin-actions">
                       {a.status === 'pending' && (
-                        <button className="btn btn-success btn-sm" title="Approve" onClick={() => handleStatus(a.id, 'confirmed')}>
+                        <button className="btn btn-s btn-sm" style={{ color: 'hsl(142, 71%, 45%)' }} title="Approve" onClick={() => handleStatus(a.id, 'confirmed')}>
                           <Check size={13} />
                         </button>
                       )}
@@ -198,7 +198,7 @@ const AdminAppointments = () => {
                           <X size={13} />
                         </button>
                       )}
-                      <button className="btn btn-danger btn-sm" title="Delete" onClick={() => setDeleteId(a.id)}>
+                      <button className="btn btn-s btn-sm" style={{ color: 'var(--color-danger)' }} title="Delete" onClick={() => setDeleteId(a.id)}>
                         <Trash2 size={13} />
                       </button>
                     </div>
@@ -272,7 +272,7 @@ const AdminDoctors = () => {
     <div className="dash-content page-fade-in">
       <div className="dash-page-header">
         <div><h2>Doctor Manager</h2><p>Add, edit, or remove doctors from the hospital roster.</p></div>
-        <button className="btn btn-primary" onClick={openAdd}><Plus size={16} /> Add Doctor</button>
+        <button className="btn btn-p" onClick={openAdd}><Plus size={16} /> Add Doctor</button>
       </div>
 
       <div className="doctor-manager-grid">
