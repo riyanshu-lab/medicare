@@ -1,4 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from 'firebase/auth';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { auth, db } from '../lib/firebase';
 import { mockUsers } from '../data/mockData';
 
 const AuthContext = createContext(null);
@@ -8,55 +16,113 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem('hms_user');
-    if (stored) setUser(JSON.parse(stored));
-    setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        // Fetch additional user data from Firestore
+        const docRef = doc(db, 'users', firebaseUser.uid);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          setUser({ id: firebaseUser.uid, ...docSnap.data() });
+        } else {
+          // Check if it's a mock admin login that somehow bypassed Firestore
+          // We can fallback
+          setUser({
+            id: firebaseUser.uid,
+            email: firebaseUser.email,
+            name: firebaseUser.displayName || 'User',
+            role: 'patient'
+          });
+        }
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const login = (email, password) => {
-    const allUsers = JSON.parse(localStorage.getItem('hms_registered_users') || '[]');
-    const combined = [...mockUsers, ...allUsers];
-    const found    = combined.find(u => u.email === email && u.password === password);
-    if (!found) return { success: false, message: 'Invalid email or password.' };
-    const { password: _pw, ...safe } = found;
-    setUser(safe);
-    localStorage.setItem('hms_user', JSON.stringify(safe));
-    return { success: true, user: safe };
+  const login = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const firebaseUser = userCredential.user;
+      
+      const docRef = doc(db, 'users', firebaseUser.uid);
+      const docSnap = await getDoc(docRef);
+      
+      let userData = {
+        id: firebaseUser.uid,
+        email: firebaseUser.email,
+        name: firebaseUser.displayName || 'User',
+        role: 'patient'
+      };
+
+      if (docSnap.exists()) {
+        userData = { id: firebaseUser.uid, ...docSnap.data() };
+      }
+      
+      setUser(userData);
+      return { success: true, user: userData };
+    } catch (error) {
+      let message = 'Invalid email or password.';
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        message = 'Invalid email or password.';
+      } else {
+        message = error.message;
+      }
+      return { success: false, message };
+    }
   };
 
-  const register = (data) => {
-    const allUsers = JSON.parse(localStorage.getItem('hms_registered_users') || '[]');
-    const exists   = [...mockUsers, ...allUsers].find(u => u.email === data.email);
-    if (exists) return { success: false, message: 'An account with this email already exists.' };
-    const newUser = {
-      id: `u_${Date.now()}`,
-      role: 'patient',
-      joinedDate: new Date().toISOString().split('T')[0],
-      ...data,
-    };
-    localStorage.setItem('hms_registered_users', JSON.stringify([...allUsers, newUser]));
-    const { password: _pw, ...safe } = newUser;
-    setUser(safe);
-    localStorage.setItem('hms_user', JSON.stringify(safe));
-    return { success: true, user: safe };
+  const register = async (data) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const firebaseUser = userCredential.user;
+      
+      const newUser = {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '',
+        role: 'patient',
+        joinedDate: new Date().toISOString().split('T')[0],
+      };
+
+      // Save user to Firestore
+      await setDoc(doc(db, 'users', firebaseUser.uid), newUser);
+      
+      const userData = { id: firebaseUser.uid, ...newUser };
+      setUser(userData);
+      
+      return { success: true, user: userData };
+    } catch (error) {
+      let message = error.message;
+      if (error.code === 'auth/email-already-in-use') {
+        message = 'An account with this email already exists.';
+      }
+      return { success: false, message };
+    }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('hms_user');
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (error) {
+      console.error('Logout error', error);
+    }
   };
 
-  const updateProfile = (updates) => {
-    const updated = { ...user, ...updates };
-    setUser(updated);
-    localStorage.setItem('hms_user', JSON.stringify(updated));
-
-    // Also update in registered users list if present
-    const allUsers = JSON.parse(localStorage.getItem('hms_registered_users') || '[]');
-    const idx = allUsers.findIndex(u => u.id === user.id);
-    if (idx !== -1) {
-      allUsers[idx] = { ...allUsers[idx], ...updates };
-      localStorage.setItem('hms_registered_users', JSON.stringify(allUsers));
+  const updateProfile = async (updates) => {
+    if (!user) return;
+    
+    try {
+      const userRef = doc(db, 'users', user.id);
+      await updateDoc(userRef, updates);
+      
+      setUser(prev => ({ ...prev, ...updates }));
+    } catch (error) {
+      console.error('Error updating profile', error);
     }
   };
 

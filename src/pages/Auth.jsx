@@ -52,7 +52,7 @@ export const Login = () => {
     if (Object.keys(e).length) { setErrors(e); return; }
     setLoading(true);
     await new Promise(r => setTimeout(r, 600));
-    const result = login(form.email, form.password);
+    const result = await login(form.email, form.password);
     setLoading(false);
     if (result.success) {
       addToast(`Welcome back, ${result.user.name?.split(' ')[0]}!`, 'success');
@@ -225,7 +225,7 @@ export const Register = () => {
     setLoading(true);
     await new Promise(r => setTimeout(r, 700));
     const { confirmPassword, ...data } = form;
-    const result = register(data);
+    const result = await register(data);
     setLoading(false);
     if (result.success) {
       addToast('Account created successfully! Welcome to Sanjeevani Hospital.', 'success');
