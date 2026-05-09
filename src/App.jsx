@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { DataProvider }          from './context/DataContext';
 import { ToastProvider }         from './context/ToastContext';
 import { NotificationProvider }  from './context/NotificationContext';
+import { ThemeProvider }         from './context/ThemeContext';
 import Navbar   from './components/layout/Navbar';
 import Footer   from './components/layout/Footer';
 import Home           from './pages/Home';
@@ -91,13 +92,15 @@ const AppRoutes = () => (
 const App = () => (
   <BrowserRouter>
     <AuthProvider>
-      <DataProvider>
-        <ToastProvider>
-          <NotificationProvider>
-            <AppRoutes />
-          </NotificationProvider>
-        </ToastProvider>
-      </DataProvider>
+      <ThemeProvider>
+        <DataProvider>
+          <ToastProvider>
+            <NotificationProvider>
+              <AppRoutes />
+            </NotificationProvider>
+          </ToastProvider>
+        </DataProvider>
+      </ThemeProvider>
     </AuthProvider>
   </BrowserRouter>
 );

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  HeartPulse, Phone, Menu, X, LayoutDashboard,
+import { Moon, Sun, HeartPulse, Phone, Menu, X, LayoutDashboard,
   LogOut, User, Settings, ChevronDown, Shield, Bell, Check
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
+import { useTheme } from '../../context/ThemeContext';
 import '../../styles/navbar.css';
 
 const Navbar = () => {
@@ -19,6 +19,7 @@ const Navbar = () => {
   const notifRef = useRef(null);
 
   const { notifications, unreadCount, markAsRead, markAllAsRead, removeNotification, requestBrowserPermission } = useNotification();
+  const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -96,6 +97,14 @@ const Navbar = () => {
               <Phone size={13} />
               <span className="emergency-text">Emergency: +91 6201489802</span>
             </a>
+
+            <button
+              onClick={toggleTheme}
+              className="btn-theme-toggle"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
 
             {user ? (
               <>

@@ -56,7 +56,7 @@ const Auth = () => {
 
   return (
     <div className="auth-page page-fade-in">
-      <div className="auth-card card">
+      <div className="auth-card card glass">
         <div className="auth-header">
           <div className="auth-logo"><HeartPulse size={32} /></div>
           <h1>{isLogin ? 'Welcome Back' : 'Create Account'}</h1>
