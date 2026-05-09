@@ -10,6 +10,7 @@
   --primary-tint: hsla(var(--p-h), var(--p-s), var(--p-l), 0.12);
   --accent: hsl(171 72% 42%);
   --accent-soft: hsl(172 72% 94%);
+  --color-accent: var(--accent);
   --success: hsl(151 72% 38%);
   --warning: hsl(35 92% 50%);
   --danger: hsl(0 76% 58%);
@@ -39,6 +40,7 @@
   --s-8: 32px;
   --s-10: 40px;
   --s-12: 48px;
+  --s-14: 56px;
   --s-16: 64px;
   --s-20: 80px;
   --s-24: 96px;
@@ -52,6 +54,7 @@
   --space-8: var(--s-8);
   --space-10: var(--s-10);
   --space-12: var(--s-12);
+  --space-14: var(--s-14);
   --space-16: var(--s-16);
   --space-20: var(--s-20);
   --space-24: var(--s-24);

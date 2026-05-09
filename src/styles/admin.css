@@ -1,89 +1,173 @@
-/* Admin-specific SaaS Enhancements */
-.admin-sidebar { 
-  background: var(--bg-card) !important; 
+.admin-dash .dash-sidebar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), var(--glass-bg)),
+    var(--bg-card);
+}
+
+.dark .admin-dash .dash-sidebar {
+  background: var(--glass-bg);
 }
 
 .admin-filter-tabs {
   display: flex;
-  gap: var(--s-2);
-  margin-bottom: var(--s-6);
-  background: var(--bg-muted);
-  padding: 4px;
-  border-radius: var(--r-lg);
+  flex-wrap: wrap;
+  gap: 6px;
   width: fit-content;
+  max-width: 100%;
+  margin-bottom: var(--s-5);
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-xs);
 }
 
 .admin-tab {
-  padding: 8px 16px;
-  border-radius: var(--r-md);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-muted);
-  border: none;
-  background: transparent;
-  transition: var(--transition);
-  cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 36px;
+  padding: 8px 13px;
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  transition: var(--transition);
 }
 
-.admin-tab:hover { color: var(--text-main); }
-.admin-tab.active { 
-  background: var(--bg-card); 
-  color: var(--primary); 
-  box-shadow: var(--shadow-sm); 
+.admin-tab:hover {
+  color: var(--text-main);
+  background: var(--bg-subtle);
+}
+
+.admin-tab.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-p);
 }
 
 .admin-tab-count {
-  font-size: 11px;
-  background: var(--bg-muted);
-  padding: 2px 6px;
-  border-radius: var(--r-sm);
-  color: var(--text-muted);
-}
-.admin-tab.active .admin-tab-count {
-  background: var(--primary-soft);
-  color: var(--primary);
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: var(--r-full);
+  background: rgba(148, 163, 184, 0.16);
+  font-size: 0.7rem;
 }
 
-/* SaaS Charts (Linear Style) */
+.admin-tab.active .admin-tab-count {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
 .admin-chart {
   display: flex;
   align-items: flex-end;
-  justify-content: space-around;
-  height: 200px;
-  padding: var(--s-6) 0;
-  gap: var(--s-4);
+  justify-content: space-between;
+  gap: var(--s-3);
+  height: 240px;
+  padding: var(--s-5);
+  border-radius: var(--r-xl);
+  background:
+    linear-gradient(rgba(100, 116, 139, 0.08) 1px, transparent 1px),
+    var(--bg-subtle);
+  background-size: 100% 25%;
 }
 
 .chart-bar-container {
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 100%;
+  align-items: center;
+  gap: var(--s-3);
 }
 
 .chart-bar {
-  width: 100%;
-  max-width: 32px;
-  margin: 0 auto;
-  background: var(--primary);
-  border-radius: var(--r-sm) var(--r-sm) 2px 2px;
-  opacity: 0.8;
-  transition: var(--transition);
+  width: min(100%, 34px);
+  border-radius: var(--r-sm) var(--r-sm) 4px 4px;
+  background: linear-gradient(180deg, var(--primary), var(--accent));
+  box-shadow: 0 12px 24px hsla(var(--p-h), var(--p-s), var(--p-l), 0.22);
+  transition: transform var(--transition), filter var(--transition);
 }
+
 .chart-bar:hover {
-  opacity: 1;
-  transform: scaleX(1.1);
+  transform: scaleX(1.15);
+  filter: saturate(1.18);
 }
 
 .chart-label {
-  margin-top: var(--s-3);
-  font-size: 11px;
-  font-weight: 700;
-  text-align: center;
-  color: var(--text-muted);
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.admin-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+
+.avail-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.day-btn {
+  min-width: 54px;
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  font-weight: 820;
+  transition: var(--transition);
+}
+
+.day-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.day-btn.active {
+  border-color: transparent;
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-p);
+}
+
+.doctor-manager-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--s-5);
+}
+
+.dm-card {
+  display: grid;
+  gap: var(--s-4);
+}
+
+@media (max-width: 760px) {
+  .admin-filter-tabs {
+    width: 100%;
+  }
+
+  .admin-tab {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .admin-modal-row {
+    grid-template-columns: 1fr;
+  }
 }

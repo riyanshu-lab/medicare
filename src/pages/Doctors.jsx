@@ -38,7 +38,7 @@ const DoctorCard = ({ doctor, onBook }) => (
       </div>
       <div className="dc-fee">
         <span className="dc-fee-label">Consultation Fee</span>
-        <span className="dc-fee-value">${doctor.fee}</span>
+        <span className="dc-fee-value">₹{doctor.fee}</span>
       </div>
     </div>
     <div className="dc-footer">
