@@ -196,21 +196,18 @@ const Booking = () => {
       </div>
 
       <div className="container booking-inner">
-        {/* Step Indicator */}
-        <div className="steps-indicator" role="list" aria-label="Booking steps">
+        <div className="steps-indicator">
           {STEPS.map((s, i) => {
             const done    = step > s.id;
             const current = step === s.id;
             const Icon    = s.icon;
             return (
               <React.Fragment key={s.id}>
-                <div className={`step-item ${done ? 'done' : ''} ${current ? 'current' : ''}`} role="listitem" aria-current={current ? 'step' : undefined}>
-                  <div className="step-circle">
-                    {done ? <Check size={16} /> : <Icon size={16} />}
-                  </div>
-                  <span className="step-label">{s.label}</span>
+                <div className={`step-item ${done ? 'done' : ''} ${current ? 'current' : ''}`}>
+                  <Icon size={16} strokeWidth={done || current ? 3 : 2} />
+                  <span>{s.label}</span>
                 </div>
-                {i < STEPS.length - 1 && <div className={`step-line ${done ? 'done' : ''}`} aria-hidden="true" />}
+                {i < STEPS.length - 1 && <div className={`step-line ${done ? 'done' : ''}`} />}
               </React.Fragment>
             );
           })}
@@ -424,28 +421,28 @@ const Booking = () => {
           )}
 
           {/* Navigation */}
-          <div className="booking-nav">
+          <div className="booking-nav" style={{ display: 'flex', marginTop: 'var(--s-10)' }}>
             {step > 1 && (
-              <button className="btn btn-ghost" onClick={() => setStep(s => s - 1)}>
-                ← Back
+              <button className="btn btn-s" onClick={() => setStep(s => s - 1)}>
+                ← Previous
               </button>
             )}
-            <div style={{ flex:1 }} />
+            <div style={{ flex: 1 }} />
             {step < 4 ? (
               <button
-                className="btn btn-primary"
+                className="btn btn-p"
                 onClick={() => setStep(s => s + 1)}
                 disabled={!canNext()}
               >
-                Continue <ChevronRight size={16} />
+                Next Step <ChevronRight size={18} />
               </button>
             ) : (
               <button
-                className="btn btn-primary btn-lg"
+                className="btn btn-p btn-lg"
                 onClick={handleSubmit}
                 disabled={submitting}
               >
-                {submitting ? <><span className="spinner" /> Booking…</> : <>Confirm Booking <Check size={16} /></>}
+                {submitting ? 'Processing...' : 'Confirm Appointment'}
               </button>
             )}
           </div>

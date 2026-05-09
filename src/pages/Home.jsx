@@ -63,64 +63,44 @@ const Home = () => {
   return (
     <main className="home-page page-fade-in">
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section className="hero-section" aria-labelledby="hero-heading">
-        <div className="hero-bg-shapes" aria-hidden="true">
-          <div className="hero-shape shape-1" />
-          <div className="hero-shape shape-2" />
-          <div className="hero-shape shape-3" />
-        </div>
+      <section className="hero-section">
         <div className="container hero-inner">
-          <div className="hero-content">
-            <div className="hero-eyebrow">
+          <div className="hero-content fade-up">
+            <div className="hero-badge">
               <BadgeCheck size={14} />
-              Trusted by 50,000+ Patients
+              <span>Next-Gen Medical Platform</span>
             </div>
-            <h1 id="hero-heading">
-              Your Health, Our<br />
-              <span className="hero-highlight">Top Priority</span>
+            <h1>
+              Healthcare<br />
+              <span style={{ color: 'var(--primary)' }}>Redefined.</span>
             </h1>
             <p className="hero-subtitle">
-              Skip the queue. Book appointments with world-class specialists
-              in seconds — from anywhere, at any time.
+              Sanjeevani Hospital combines cutting-edge technology with world-class medical expertise to provide a seamless care experience.
             </p>
             <div className="hero-actions">
-              <Link to="/booking" className="btn btn-primary btn-lg">
-                Book an Appointment <ArrowRight size={18} />
+              <Link to="/booking" className="btn btn-p btn-lg">
+                Get Started <ArrowRight size={18} />
               </Link>
-              <Link to="/doctors" className="btn btn-outline btn-lg">
-                Meet Our Doctors
+              <Link to="/doctors" className="btn btn-s btn-lg">
+                Explore Specialists
               </Link>
-            </div>
-            <div className="hero-trust">
-              {['ISO Certified', 'NABH Accredited', '24/7 Emergency'].map(t => (
-                <div key={t} className="hero-trust-item">
-                  <Shield size={13} /> {t}
-                </div>
-              ))}
             </div>
           </div>
-          <div className="hero-visual" aria-hidden="true">
-            <div className="hero-card-stack">
-              <div className="hero-card hero-card-main">
-                <div className="hero-card-header">
-                  <CalendarCheck size={20} className="hc-icon" />
-                  <span>Appointment Confirmed</span>
-                </div>
-                <div className="hero-card-doctor">
-                  <div className="avatar avatar-md">SM</div>
-                  <div>
-                    <div className="hc-name">Dr. Sarah Mitchell</div>
-                    <div className="hc-spec">Cardiology · Today, 10:00 AM</div>
-                  </div>
-                </div>
-                <div className="hero-card-id">APT-001 ✓ Confirmed</div>
+          <div className="hero-visual fade-up" style={{ animationDelay: '0.2s' }}>
+            <div className="preview-card">
+              <div className="hero-card-header">
+                <CalendarCheck size={18} />
+                <span>Live Status</span>
               </div>
-              <div className="hero-card hero-card-stats">
-                <div className="hcs-item"><span className="hcs-val">98%</span><span className="hcs-lbl">Satisfaction</span></div>
-                <div className="hcs-divider" />
-                <div className="hcs-item"><span className="hcs-val">50K+</span><span className="hcs-lbl">Patients</span></div>
-                <div className="hcs-divider" />
-                <div className="hcs-item"><span className="hcs-val">120+</span><span className="hcs-lbl">Specialists</span></div>
+              <div className="hero-card-doctor">
+                <div className="avatar avatar-md" style={{ background: 'var(--primary-soft)', color: 'var(--primary)' }}>SM</div>
+                <div>
+                  <div className="hc-name">Dr. Sarah Mitchell</div>
+                  <div className="hc-spec">Cardiology · Available Now</div>
+                </div>
+              </div>
+              <div style={{ height: 100, background: 'var(--bg-muted)', borderRadius: 'var(--r-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', fontSize: 12 }}>
+                Patient Load Visualization
               </div>
             </div>
           </div>
@@ -128,12 +108,24 @@ const Home = () => {
       </section>
 
       {/* ── Stats ─────────────────────────────────────────────────────────── */}
-      <section className="stats-section" aria-label="Hospital statistics">
-        <div className="container stats-grid">
-          <StatCard icon={Users}        value="50,000+"  label="Patients Served"   />
-          <StatCard icon={Award}        value="120+"     label="Specialist Doctors" />
-          <StatCard icon={CalendarCheck} value="200+"    label="Daily Appointments" />
-          <StatCard icon={Clock}        value="24/7"     label="Emergency Care"     />
+      <section className="container">
+        <div className="stats-grid">
+          <div className="premium-stat fade-up" style={{ animationDelay: '0.3s' }}>
+            <span className="stat-val">50k+</span>
+            <span className="stat-lbl">Patients</span>
+          </div>
+          <div className="premium-stat fade-up" style={{ animationDelay: '0.4s' }}>
+            <span className="stat-val">120+</span>
+            <span className="stat-lbl">Specialists</span>
+          </div>
+          <div className="premium-stat fade-up" style={{ animationDelay: '0.5s' }}>
+            <span className="stat-val">98%</span>
+            <span className="stat-lbl">Satisfaction</span>
+          </div>
+          <div className="premium-stat fade-up" style={{ animationDelay: '0.6s' }}>
+            <span className="stat-val">24/7</span>
+            <span className="stat-lbl">Emergency</span>
+          </div>
         </div>
       </section>
 

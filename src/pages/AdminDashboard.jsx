@@ -12,7 +12,6 @@ import { useNotification } from '../context/NotificationContext';
 import '../styles/dashboard.css';
 import '../styles/admin.css';
 
-/* ─── Admin Sidebar ──────────────────────────────────────────────────────────── */
 const AdminSidebar = ({ onLogout }) => {
   const navItems = [
     { to: '/admin',             label: 'Overview',     icon: LayoutDashboard, end: true },
@@ -22,12 +21,12 @@ const AdminSidebar = ({ onLogout }) => {
     { to: '/admin/patients',    label: 'Patients',     icon: Users       },
   ];
   return (
-    <aside className="dash-sidebar admin-sidebar" aria-label="Admin navigation">
+    <aside className="dash-sidebar">
       <div className="dash-sidebar-user">
-        <div className="avatar avatar-lg" style={{ background:'#7C3AED22', color:'#7C3AED' }}>A</div>
+        <div className="avatar avatar-md" style={{ background: 'var(--primary)', color: '#fff' }}>A</div>
         <div>
-          <div className="dsu-name">Admin Panel</div>
-          <div className="dsu-role">System Admin</div>
+          <div className="dsu-name">Admin Console</div>
+          <div className="dsu-role">System Operations</div>
         </div>
       </div>
       <nav className="dash-nav">
@@ -35,12 +34,12 @@ const AdminSidebar = ({ onLogout }) => {
           <NavLink key={to} to={to} end={end}
             className={({ isActive }) => `dash-nav-item ${isActive ? 'active' : ''}`}
           >
-            <Icon size={18} /> {label}
+            <Icon size={18} strokeWidth={2.5} /> {label}
           </NavLink>
         ))}
       </nav>
       <button className="dash-nav-item dash-logout" onClick={onLogout}>
-        <LogOut size={18} /> Sign Out
+        <LogOut size={18} strokeWidth={2.5} /> Sign Out
       </button>
     </aside>
   );
@@ -51,81 +50,61 @@ const StatusBadge = ({ status }) => {
   return <span className={`badge ${map[status] || 'badge-gray'}`}>{status}</span>;
 };
 
-/* ─── Admin Overview ─────────────────────────────────────────────────────────── */
-const AdminOverview = () => {
-  const { appointments, doctors, departments } = useData();
-  const today   = new Date().toISOString().split('T')[0];
-  const todayApts = appointments.filter(a => a.date === today);
-  const pending   = appointments.filter(a => a.status === 'pending');
-
   return (
-    <div className="dash-content page-fade-in">
+    <div className="dash-content fade-up">
       <div className="dash-page-header">
         <div>
-          <h2>Admin Overview</h2>
-          <p>Hospital operations at a glance — {new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' })}</p>
+          <h2>System Intelligence</h2>
+          <p>Real-time hospital operations and resource metrics.</p>
         </div>
       </div>
 
       <div className="dash-stats-grid">
         {[
-          { label: "Today's Bookings", value: todayApts.length,       icon: <Calendar size={20} />,     color:'#2563EB' },
-          { label: 'Active Doctors',   value: doctors.length,          icon: <UserCog size={20} />,      color:'#10B981' },
-          { label: 'Pending Approval', value: pending.length,          icon: <AlertTriangle size={20} />,color:'#F59E0B' },
-          { label: 'Total Bookings',   value: appointments.length,     icon: <TrendingUp size={20} />,   color:'#7C3AED' },
+          { label: "Today's Bookings", value: todayApts.length,       icon: <Calendar size={18} />,     color:'var(--primary)' },
+          { label: 'Active Doctors',   value: doctors.length,          icon: <UserCog size={18} />,      color:'hsl(142, 71%, 45%)' },
+          { label: 'Pending Approval', value: pending.length,          icon: <AlertTriangle size={18} />,color:'hsl(38, 92%, 50%)' },
+          { label: 'Total Volume',     value: appointments.length,     icon: <TrendingUp size={18} />,   color:'hsl(262, 83%, 58%)' },
         ].map(s => (
-          <div key={s.label} className="dash-stat-card card">
-            <div className="dash-stat-icon" style={{ background:`${s.color}18`, color:s.color }}>{s.icon}</div>
+          <div key={s.label} className="dash-stat-card">
+            <div className="dash-stat-icon" style={{ background:`${s.color}15`, color:s.color }}>{s.icon}</div>
             <div className="dash-stat-value">{s.value}</div>
             <div className="dash-stat-label">{s.label}</div>
           </div>
         ))}
       </div>
 
-      {/* Charts & Recent Activity Row */}
-      <div className="dash-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-6)', marginTop: 'var(--space-6)' }}>
-        
-        {/* Weekly Bookings Chart */}
-        <div className="card" style={{ padding: 'var(--space-6)' }}>
-          <div className="dash-section-header" style={{ marginBottom: 'var(--space-6)' }}>
-            <h4>Weekly Bookings</h4>
+      <div className="grid" style={{ gridTemplateColumns: '1.5fr 1fr' }}>
+        <div className="card">
+          <div className="dash-section-header" style={{ marginBottom: 'var(--s-6)' }}>
+            <h4>Weekly Throughput</h4>
           </div>
           <div className="admin-chart">
             {[40, 65, 45, 80, 55, 90, 70].map((val, i) => (
               <div key={i} className="chart-bar-container">
-                <div className="chart-bar" style={{ height: `${val}%`, background: 'var(--gradient-primary)' }}>
-                  <span className="chart-tooltip">{val}</span>
-                </div>
+                <div className="chart-bar" style={{ height: `${val}%` }} />
                 <span className="chart-label">{['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i]}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent appointments */}
         <div className="card" style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="dash-section-header" style={{ padding: 'var(--space-6) var(--space-6) 0' }}>
-            <h4>Recent Appointments</h4>
-            <NavLink to="/admin/appointments" className="dash-see-all">View all</NavLink>
+          <div className="dash-section-header" style={{ marginBottom: 'var(--s-6)' }}>
+            <h4>Active Logs</h4>
+            <NavLink to="/admin/appointments" className="btn btn-s btn-sm">Audit All</NavLink>
           </div>
-          <div className="table-wrapper" style={{ border: 'none', borderRadius: '0 0 var(--radius-xl) var(--radius-xl)', flex: 1 }}>
-            <table style={{ margin: 0 }}>
-              <thead>
-                <tr><th>Patient</th><th>Doctor</th><th>Status</th></tr>
-              </thead>
-              <tbody>
-                {appointments.slice(0, 5).map(a => (
-                  <tr key={a.id}>
-                    <td>{a.patientName}</td>
-                    <td>{a.doctorName}</td>
-                    <td><StatusBadge status={a.status} /></td>
-                  </tr>
-                ))}
-                {appointments.length === 0 && (
-                  <tr><td colSpan={3} style={{ textAlign: 'center', color: 'var(--color-gray-400)', padding: 'var(--space-6)' }}>No recent appointments</td></tr>
-                )}
-              </tbody>
-            </table>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s-4)' }}>
+            {appointments.slice(0, 5).map(a => (
+              <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--s-3)', paddingBottom: 'var(--s-3)', borderBottom: '1px solid var(--border)' }}>
+                <div className="avatar avatar-sm" style={{ background: 'var(--bg-muted)' }}>{a.patientName[0]}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 600, fontSize: 13 }}>{a.patientName}</div>
+                  <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>with {a.doctorName}</div>
+                </div>
+                <StatusBadge status={a.status} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

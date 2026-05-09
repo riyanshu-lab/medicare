@@ -67,13 +67,12 @@ const Navbar = () => {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} role="navigation" aria-label="Main navigation">
         <div className="container navbar-inner">
           {/* Brand */}
-          <NavLink to="/" className="navbar-brand" aria-label="Sanjeevani Hospital Home">
+          <NavLink to="/" className="navbar-brand">
             <div className="navbar-logo-icon">
-              <HeartPulse size={20} />
+              <HeartPulse size={18} strokeWidth={3} />
             </div>
             <div className="navbar-brand-text">
               <strong>Sanjeevani</strong>
-              <span>Hospital & Clinic</span>
             </div>
           </NavLink>
 
@@ -93,9 +92,9 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="navbar-actions">
-            <a href="tel:+916201489802" className="emergency-btn" aria-label="Emergency contact: +91 6201489802">
-              <Phone size={13} />
-              <span className="emergency-text">Emergency: +91 6201489802</span>
+            <a href="tel:+916201489802" className="emergency-chip">
+              <Phone size={12} />
+              <span>Emergency</span>
             </a>
 
             <button

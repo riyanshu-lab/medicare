@@ -92,47 +92,22 @@ const Contact = () => {
                   <form onSubmit={handleSubmit} noValidate className="contact-form">
                     <div className="contact-form-row">
                       <div className="form-group">
-                        <label className="form-label" htmlFor="c-name">Full Name *</label>
-                        <input id="c-name" type="text" className={`form-input ${errors.name ? 'error' : ''}`}
-                          value={form.name} onChange={e => handleChange('name', e.target.value)} placeholder="John Smith" />
-                        <FieldError msg={errors.name} />
+                        <input id="c-name" type="text" className="input"
+                          value={form.name} onChange={e => handleChange('name', e.target.value)} placeholder="Full Name" />
                       </div>
                       <div className="form-group">
-                        <label className="form-label" htmlFor="c-email">Email Address *</label>
-                        <input id="c-email" type="email" className={`form-input ${errors.email ? 'error' : ''}`}
-                          value={form.email} onChange={e => handleChange('email', e.target.value)} placeholder="you@example.com" />
-                        <FieldError msg={errors.email} />
+                        <input id="c-email" type="email" className="input"
+                          value={form.email} onChange={e => handleChange('email', e.target.value)} placeholder="Email Address" />
                       </div>
                     </div>
-                    <div className="contact-form-row">
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="c-phone">Phone (optional)</label>
-                        <input id="c-phone" type="tel" className="form-input"
-                          value={form.phone} onChange={e => handleChange('phone', e.target.value)} placeholder="+91 6201489802" />
-                      </div>
-                      <div className="form-group">
-                        <label className="form-label" htmlFor="c-subject">Subject</label>
-                        <select id="c-subject" className="form-input form-select"
-                          value={form.subject} onChange={e => handleChange('subject', e.target.value)}>
-                          <option value="">Select a topic</option>
-                          <option>Appointment Inquiry</option>
-                          <option>Billing Question</option>
-                          <option>Feedback</option>
-                          <option>Medical Records</option>
-                          <option>Other</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="c-msg">Message *</label>
-                      <textarea id="c-msg" className={`form-input ${errors.message ? 'error' : ''}`}
-                        rows={5} style={{ resize:'vertical' }}
+                    <div className="form-group" style={{ marginTop: 'var(--s-4)' }}>
+                      <textarea id="c-msg" className="input"
+                        rows={5}
                         value={form.message} onChange={e => handleChange('message', e.target.value)}
-                        placeholder="Tell us how we can help you…" />
-                      <FieldError msg={errors.message} />
+                        placeholder="How can we help you?..." />
                     </div>
-                    <button type="submit" className="btn btn-primary contact-submit" disabled={sending}>
-                      {sending ? <><span className="spinner" /> Sending…</> : <><Send size={16} /> Send Message</>}
+                    <button type="submit" className="btn btn-p" style={{ width: '100%', marginTop: 'var(--s-6)' }} disabled={sending}>
+                      {sending ? 'Sending...' : 'Send Message'}
                     </button>
                   </form>
                 </>

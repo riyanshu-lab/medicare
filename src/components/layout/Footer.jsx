@@ -25,16 +25,12 @@ const Footer = () => {
         <div className="container footer-grid">
           {/* Brand */}
           <div className="footer-brand">
-            <Link to="/" className="footer-logo" aria-label="Sanjeevani Hospital Home">
-              <div className="footer-logo-icon"><HeartPulse size={22} /></div>
-              <div>
-                <strong>Sanjeevani</strong>
-                <span>Hospital & Clinic</span>
-              </div>
+            <Link to="/" className="footer-logo">
+              <div className="footer-logo-icon"><HeartPulse size={18} strokeWidth={3} /></div>
+              <strong>Sanjeevani</strong>
             </Link>
             <p className="footer-tagline">
-              Providing compassionate, world-class healthcare since 1985.
-              Your health is our highest priority.
+              Next-generation healthcare platform combining medical expertise with cutting-edge technology.
             </p>
             <div className="footer-socials">
               {[

@@ -21,12 +21,12 @@ const Sidebar = ({ onLogout }) => {
     { to: '/dashboard/profile',  label: 'My Profile',  icon: User     },
   ];
   return (
-    <aside className="dash-sidebar" aria-label="Patient navigation">
+    <aside className="dash-sidebar">
       <div className="dash-sidebar-user">
-        <div className="avatar avatar-lg">{user?.name?.charAt(0)}</div>
+        <div className="avatar avatar-md" style={{ background: 'var(--primary)', color: '#fff' }}>{user?.name?.charAt(0)}</div>
         <div>
           <div className="dsu-name">{user?.name}</div>
-          <div className="dsu-role">Patient</div>
+          <div className="dsu-role">Patient Profile</div>
         </div>
       </div>
       <nav className="dash-nav">
@@ -34,12 +34,12 @@ const Sidebar = ({ onLogout }) => {
           <NavLink key={to} to={to} end={end}
             className={({ isActive }) => `dash-nav-item ${isActive ? 'active' : ''}`}
           >
-            <Icon size={18} /> {label}
+            <Icon size={18} strokeWidth={2.5} /> {label}
           </NavLink>
         ))}
       </nav>
       <button className="dash-nav-item dash-logout" onClick={onLogout}>
-        <LogOut size={18} /> Sign Out
+        <LogOut size={18} strokeWidth={2.5} /> Sign Out
       </button>
     </aside>
   );
@@ -65,27 +65,26 @@ const Overview = () => {
   const upcoming = userApts.filter(a => a.status !== 'cancelled' && a.status !== 'completed' && a.date >= new Date().toISOString().split('T')[0]);
 
   return (
-    <div className="dash-content page-fade-in">
+    <div className="dash-content fade-up">
       <div className="dash-page-header">
         <div>
-          <h2>Welcome back, {user?.name?.split(' ')[0]}!</h2>
-          <p>Here's a summary of your health appointments.</p>
+          <h2>Hello, {user?.name?.split(' ')[0]}</h2>
+          <p>You have {upcoming.length} scheduled visits this month.</p>
         </div>
-        <button className="btn btn-primary" onClick={() => navigate('/booking')}>
+        <button className="btn btn-p" onClick={() => navigate('/booking')}>
           + Book Appointment
         </button>
       </div>
 
-      {/* Stats */}
       <div className="dash-stats-grid">
         {[
-          { label: 'Upcoming',   value: upcoming.length, icon: <Clock size={20} />,         color: '#2563EB' },
-          { label: 'Completed',  value: userApts.filter(a => a.status === 'completed').length, icon: <CheckCircle size={20} />, color: '#10B981' },
-          { label: 'Cancelled',  value: userApts.filter(a => a.status === 'cancelled').length, icon: <XCircle size={20} />,    color: '#EF4444' },
-          { label: 'Total Visits',value: userApts.length, icon: <Calendar size={20} />,      color: '#7C3AED' },
+          { label: 'Upcoming',   value: upcoming.length, icon: <Clock size={18} />,         color: 'var(--primary)' },
+          { label: 'Completed',  value: userApts.filter(a => a.status === 'completed').length, icon: <CheckCircle size={18} />, color: 'hsl(142, 71%, 45%)' },
+          { label: 'Cancelled',  value: userApts.filter(a => a.status === 'cancelled').length, icon: <XCircle size={18} />,    color: 'hsl(0, 84%, 60%)' },
+          { label: 'Total Visits',value: userApts.length, icon: <Calendar size={18} />,      color: 'hsl(262, 83%, 58%)' },
         ].map(s => (
-          <div key={s.label} className="dash-stat-card card">
-            <div className="dash-stat-icon" style={{ background: `${s.color}18`, color: s.color }}>
+          <div key={s.label} className="dash-stat-card">
+            <div className="dash-stat-icon" style={{ background: `${s.color}15`, color: s.color }}>
               {s.icon}
             </div>
             <div className="dash-stat-value">{s.value}</div>
@@ -94,33 +93,28 @@ const Overview = () => {
         ))}
       </div>
 
-      {/* Upcoming */}
-      <div className="card dash-section-card">
-        <div className="dash-section-header">
+      <div className="card">
+        <div className="dash-section-header" style={{ marginBottom: 'var(--s-6)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h4>Upcoming Appointments</h4>
-          <NavLink to="/dashboard/appointments" className="dash-see-all">See all <ArrowRight size={14} /></NavLink>
+          <NavLink to="/dashboard/appointments" className="btn btn-s btn-sm">See all</NavLink>
         </div>
         {upcoming.length === 0 ? (
-          <div className="empty-state" style={{ padding: 'var(--space-10)' }}>
-            <div className="empty-state-icon">📅</div>
+          <div className="empty-state">
+            <Calendar size={48} strokeWidth={1} style={{ marginBottom: 'var(--s-4)', opacity: 0.5 }} />
             <h3>No upcoming appointments</h3>
-            <p>Book an appointment with one of our specialists.</p>
-            <button className="btn btn-primary" style={{ marginTop: 'var(--space-4)' }} onClick={() => navigate('/booking')}>
-              Book Now
-            </button>
+            <p>Schedule your next visit with our specialists.</p>
           </div>
         ) : (
           <div className="apt-list">
             {upcoming.slice(0, 3).map(a => (
-              <div key={a.id} className="apt-item">
-                <div className="apt-date-block">
-                  <div className="apt-month">{a.date.split('-')[1] && ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(a.date.split('-')[1])-1]}</div>
-                  <div className="apt-day">{Number(a.date.split('-')[2])}</div>
+              <div key={a.id} className="apt-item" style={{ display: 'flex', gap: 'var(--s-4)', padding: 'var(--s-4) 0', borderTop: '1px solid var(--border)' }}>
+                <div style={{ padding: '8px 12px', background: 'var(--bg-muted)', borderRadius: 'var(--r-md)', textAlign: 'center', minWidth: 60 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase' }}>{a.date.split('-')[1] && ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][Number(a.date.split('-')[1])-1]}</div>
+                  <div style={{ fontSize: 20, fontWeight: 800 }}>{Number(a.date.split('-')[2])}</div>
                 </div>
-                <div className="apt-info">
-                  <div className="apt-doctor">{a.doctorName}</div>
-                  <div className="apt-dept">{a.department} · {a.time}</div>
-                  <div className="apt-id">#{a.id}</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, fontSize: 16 }}>{a.doctorName}</div>
+                  <div style={{ fontSize: 14, color: 'var(--text-muted)' }}>{a.department} · {a.time}</div>
                 </div>
                 <StatusBadge status={a.status} />
               </div>
