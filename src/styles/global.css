@@ -118,14 +118,21 @@ h1, h2, h3, h4, h5, h6 {
 .btn-p:active { transform: translateY(0); scale: 0.98; }
 
 .btn-s {
-  background: var(--bg-card);
-  color: var(--text-main);
-  border-color: var(--border);
-  box-shadow: var(--shadow-sm);
-}
-.btn-s:hover {
-  border-color: var(--border-hover);
   background: var(--bg-muted);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+
+.dark .btn-s {
+  background: var(--bg-muted);
+  border-color: hsla(0, 0%, 100%, 0.1);
+  color: hsla(0, 0%, 100%, 0.9);
+}
+
+.btn-s:hover {
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 /* SaaS Cards */
@@ -134,11 +141,13 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border);
   border-radius: var(--r-xl);
   padding: var(--s-6);
-  transition: var(--transition);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
 }
 .card:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-soft);
 }
 
 .glass {

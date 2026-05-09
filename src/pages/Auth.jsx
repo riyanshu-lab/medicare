@@ -68,7 +68,7 @@ const Auth = () => {
           <p>{isLogin ? 'Enter your details to access your dashboard' : 'Join thousands of patients receiving world-class care'}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form onSubmit={handleAuth} className="auth-form">
           {!isLogin && (
             <div className="form-group">
               <input 
@@ -109,9 +109,9 @@ const Auth = () => {
 
         <div className="auth-divider">or continue with</div>
 
-        <button onClick={handleGoogle} className="btn btn-google" style={{ width: '100%' }} disabled={loading}>
+        <button onClick={handleGoogle} className="btn btn-s" style={{ width: '100%', display: 'flex', justifyContent: 'center', gap: '12px' }} disabled={loading}>
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/split-screen/google.svg" alt="" width="18" />
-          Google
+          Continue with Google
         </button>
 
         <p style={{ textAlign: 'center', marginTop: 'var(--s-8)', fontSize: 14, color: 'var(--text-muted)' }}>

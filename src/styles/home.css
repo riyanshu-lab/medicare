@@ -150,3 +150,20 @@
   position: relative;
   z-index: 10;
 }
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; text-align: center; gap: var(--s-10); }
+  .hero-subtitle { margin: 0 auto var(--s-10); font-size: 1.1rem; }
+  .hero-actions { justify-content: center; flex-wrap: wrap; }
+  .hero-visual { display: none; }
+  .why-inner { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); margin-top: var(--s-10); gap: var(--s-4); }
+  .premium-stat { padding: var(--s-6); }
+  .stat-val { font-size: 2rem; }
+}
+
+@media (max-width: 640px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero-content h1 { font-size: 3rem; }
+}
