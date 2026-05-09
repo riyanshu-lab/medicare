@@ -9,30 +9,26 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
-import { mockUsers } from '../data/mockData';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser]       = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Sync Auth State
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // Fetch additional user data from Firestore
-        const docRef = doc(db, 'users', firebaseUser.uid);
-        const docSnap = await getDoc(docRef);
-        
+        const docSnap = await getDoc(doc(db, 'users', firebaseUser.uid));
         if (docSnap.exists()) {
           setUser({ id: firebaseUser.uid, ...docSnap.data() });
         } else {
-          // Check if it's a mock admin login that somehow bypassed Firestore
-          // We can fallback
+          // Fallback profile if Firestore is still propagating
           setUser({
             id: firebaseUser.uid,
             email: firebaseUser.email,
-            name: firebaseUser.displayName || 'User',
+            name: firebaseUser.displayName || 'New User',
             role: 'patient'
           });
         }
@@ -41,131 +37,70 @@ export const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
-  const login = async (email, password) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const firebaseUser = userCredential.user;
-      
-      const docRef = doc(db, 'users', firebaseUser.uid);
-      const docSnap = await getDoc(docRef);
-      
-      let userData = {
-        id: firebaseUser.uid,
-        email: firebaseUser.email,
-        name: firebaseUser.displayName || 'User',
-        role: 'patient'
-      };
-
-      if (docSnap.exists()) {
-        userData = { id: firebaseUser.uid, ...docSnap.data() };
-      }
-      
-      setUser(userData);
-      return { success: true, user: userData };
-    } catch (error) {
-      let message = 'Invalid email or password.';
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-        message = 'Invalid email or password.';
-      } else {
-        message = error.message;
-      }
-      return { success: false, message };
-    }
-  };
-
+  // Simple Email Register
   const register = async (data) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
-      const firebaseUser = userCredential.user;
-      
-      const newUser = {
+      const { user: fUser } = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const userData = {
         name: data.name,
         email: data.email,
         phone: data.phone || '',
         role: 'patient',
         joinedDate: new Date().toISOString().split('T')[0],
       };
-
-      // Save user to Firestore
-      await setDoc(doc(db, 'users', firebaseUser.uid), newUser);
-      
-      const userData = { id: firebaseUser.uid, ...newUser };
-      setUser(userData);
-      
-      return { success: true, user: userData };
+      await setDoc(doc(db, 'users', fUser.uid), userData);
+      return { success: true };
     } catch (error) {
-      let message = error.message;
-      if (error.code === 'auth/email-already-in-use') {
-        message = 'An account with this email already exists.';
-      }
-      return { success: false, message };
+      return { success: false, message: error.code === 'auth/email-already-in-use' ? 'Email already exists.' : error.message };
     }
   };
 
+  // Simple Email Login
+  const login = async (email, password) => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: 'Invalid credentials.' };
+    }
+  };
+
+  // Simple Google Login/Signup
   const loginWithGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(auth, provider);
-      const firebaseUser = userCredential.user;
+      const { user: fUser } = await signInWithPopup(auth, provider);
       
-      const docRef = doc(db, 'users', firebaseUser.uid);
+      const docRef = doc(db, 'users', fUser.uid);
       const docSnap = await getDoc(docRef);
-      
-      let userData = {
-        id: firebaseUser.uid,
-        email: firebaseUser.email,
-        name: firebaseUser.displayName || 'User',
-        role: 'patient'
-      };
 
       if (!docSnap.exists()) {
-        const newUser = {
-          name: userData.name,
-          email: userData.email,
-          phone: firebaseUser.phoneNumber || '',
+        await setDoc(docRef, {
+          name: fUser.displayName || 'Google User',
+          email: fUser.email,
+          phone: fUser.phoneNumber || '',
           role: 'patient',
           joinedDate: new Date().toISOString().split('T')[0],
-        };
-        await setDoc(docRef, newUser);
-      } else {
-        userData = { id: firebaseUser.uid, ...docSnap.data() };
+        });
       }
-      
-      setUser(userData);
-      return { success: true, user: userData };
+      return { success: true };
     } catch (error) {
-      console.error('Google Sign-In Error', error);
-      let message = error.message;
-      if (error.code === 'auth/popup-closed-by-user') {
-        message = 'Google sign-in was cancelled.';
-      }
-      return { success: false, message };
+      return { success: false, message: error.code === 'auth/popup-closed-by-user' ? 'Sign-in cancelled.' : error.message };
     }
   };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-    } catch (error) {
-      console.error('Logout error', error);
-    }
-  };
+  const logout = () => signOut(auth);
 
   const updateProfile = async (updates) => {
     if (!user) return;
-    
     try {
-      const userRef = doc(db, 'users', user.id);
-      await updateDoc(userRef, updates);
-      
+      await updateDoc(doc(db, 'users', user.id), updates);
       setUser(prev => ({ ...prev, ...updates }));
     } catch (error) {
-      console.error('Error updating profile', error);
+      console.error('Update failed:', error);
     }
   };
 
