@@ -7,7 +7,7 @@ import { NotificationProvider }  from './context/NotificationContext';
 import Navbar   from './components/layout/Navbar';
 import Footer   from './components/layout/Footer';
 import Home           from './pages/Home';
-import { Login, Register } from './pages/Auth';
+import Auth            from './pages/Auth';
 import Doctors        from './pages/Doctors';
 import Departments    from './pages/Departments';
 import Booking        from './pages/Booking';
@@ -46,8 +46,8 @@ const AppRoutes = () => (
     <Route path="/doctors"     element={<Layout><Doctors /></Layout>} />
     <Route path="/departments" element={<Layout><Departments /></Layout>} />
     <Route path="/contact"     element={<Layout><Contact /></Layout>} />
-    <Route path="/login"       element={<Layout hideFooter><Login /></Layout>} />
-    <Route path="/register"    element={<Layout hideFooter><Register /></Layout>} />
+    <Route path="/login"       element={<Layout hideFooter><Auth /></Layout>} />
+    <Route path="/register"    element={<Layout hideFooter><Auth /></Layout>} />
 
     <Route path="/booking" element={
       <Layout>
