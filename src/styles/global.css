@@ -178,12 +178,36 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--s-6);
 }
 
-/* ─── Animations ─────────────────────────────────────────────────────────────── */
-.fade-up {
-  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* ─── Utilities ─────────────────────────────────────────────────────────────── */
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-full);
+  font-weight: 800;
+  flex-shrink: 0;
+  background: var(--bg-muted);
+  color: var(--text-muted);
+}
+.avatar-sm { width: 32px; height: 32px; font-size: 12px; }
+.avatar-md { width: 44px; height: 44px; font-size: 16px; }
+.avatar-lg { width: 64px; height: 64px; font-size: 24px; }
+
+.badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: var(--r-full);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.badge-primary { background: var(--primary-soft); color: var(--primary); }
+.badge-success { background: hsl(142, 71%, 95%); color: hsl(142, 71%, 45%); }
+.badge-warning { background: hsl(38, 92%, 95%); color: hsl(38, 92%, 50%); }
+.badge-danger  { background: hsl(0, 84%, 95%); color: hsl(0, 84%, 60%); }
+
+.dark .badge-success { background: hsla(142, 71%, 45%, 0.1); }
+.dark .badge-warning { background: hsla(38, 92%, 50%, 0.1); }
+.dark .badge-danger  { background: hsla(0, 84%, 60%, 0.1); }
