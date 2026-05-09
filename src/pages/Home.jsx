@@ -180,7 +180,7 @@ const Home = () => {
                 </div>
               ))}
             </div>
-            <Link to="/booking" className="btn btn-primary">
+            <Link to="/booking" className="btn btn-p">
               Book Your Appointment <ArrowRight size={16} />
             </Link>
           </div>
@@ -220,8 +220,8 @@ const Home = () => {
               />
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: 'var(--space-10)' }}>
-            <Link to="/doctors" className="btn btn-outline btn-lg">
+          <div style={{ textAlign: 'center', marginTop: 'var(--s-10)' }}>
+            <Link to="/doctors" className="btn btn-s btn-lg">
               View All Doctors <ArrowRight size={16} />
             </Link>
           </div>
@@ -250,8 +250,8 @@ const Home = () => {
             <p>Join thousands of patients who've simplified their healthcare journey with Sanjeevani Hospital.</p>
           </div>
           <div className="cta-actions">
-            <Link to="/booking"  className="btn btn-primary btn-lg">Book Appointment</Link>
-            <Link to="/register" className="btn btn-outline btn-lg" style={{ borderColor:'rgba(255,255,255,0.4)', color:'white' }}>
+            <Link to="/booking"  className="btn btn-s btn-lg" style={{ background: 'white', color: 'var(--primary)' }}>Book Appointment</Link>
+            <Link to="/register" className="btn btn-s btn-lg" style={{ background: 'transparent', borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}>
               Create Account
             </Link>
           </div>
