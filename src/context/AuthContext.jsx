@@ -12,6 +12,8 @@ import { auth, db } from '../lib/firebase';
 
 const AuthContext = createContext(null);
 
+const ADMIN_EMAILS = ['riyanshuakash@gmail.com', 'admin@example.com'];
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,14 +24,21 @@ export const AuthProvider = ({ children }) => {
       if (firebaseUser) {
         const docSnap = await getDoc(doc(db, 'users', firebaseUser.uid));
         if (docSnap.exists()) {
-          setUser({ id: firebaseUser.uid, ...docSnap.data() });
+          const userData = docSnap.data();
+          // Auto-promote if email is in ADMIN_EMAILS but role is not admin
+          if (ADMIN_EMAILS.includes(firebaseUser.email) && userData.role !== 'admin') {
+            await updateDoc(doc(db, 'users', firebaseUser.uid), { role: 'admin' });
+            userData.role = 'admin';
+          }
+          setUser({ id: firebaseUser.uid, ...userData });
         } else {
           // Fallback profile if Firestore is still propagating
+          const role = ADMIN_EMAILS.includes(firebaseUser.email) ? 'admin' : 'patient';
           setUser({
             id: firebaseUser.uid,
             email: firebaseUser.email,
             name: firebaseUser.displayName || 'New User',
-            role: 'patient'
+            role
           });
         }
       } else {
@@ -48,7 +57,7 @@ export const AuthProvider = ({ children }) => {
         name: data.name,
         email: data.email,
         phone: data.phone || '',
-        role: 'patient',
+        role: ADMIN_EMAILS.includes(data.email) ? 'admin' : 'patient',
         joinedDate: new Date().toISOString().split('T')[0],
       };
       await setDoc(doc(db, 'users', fUser.uid), userData);
@@ -82,7 +91,7 @@ export const AuthProvider = ({ children }) => {
           name: fUser.displayName || 'Google User',
           email: fUser.email,
           phone: fUser.phoneNumber || '',
-          role: 'patient',
+          role: ADMIN_EMAILS.includes(fUser.email) ? 'admin' : 'patient',
           joinedDate: new Date().toISOString().split('T')[0],
         });
       }

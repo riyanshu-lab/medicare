@@ -173,6 +173,15 @@ export const mockUsers = [
     role: 'admin',
     joinedDate: '2023-06-01',
   },
+  {
+    id: 'admin-riyanshu',
+    name: 'Riyanshu Akash',
+    email: 'riyanshuakash@gmail.com',
+    phone: '+1 555-9999',
+    password: 'GoogleAuthUser',
+    role: 'admin',
+    joinedDate: '2024-05-09',
+  },
 ];
 
 // ─── Sample Appointments ───────────────────────────────────────────────────────
