@@ -159,4 +159,24 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   to { opacity: 1; transform: translateY(0); }
 }
 
-.text-muted { color: var(--text-muted); }
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+  z-index: 2000;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Page Transition ────────────────────────────────────────────────────────── */

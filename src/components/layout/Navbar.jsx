@@ -245,7 +245,7 @@ const Navbar = () => {
           </>
         )}
         <div className="mobile-menu-divider" />
-        <a href="tel:+916201489802" className="emergency-btn" style={{ alignSelf:'flex-start' }}>
+        <a href="tel:+916201489802" className="mobile-emergency-link">
           <Phone size={13} />
           Emergency: +91 6201489802
         </a>
